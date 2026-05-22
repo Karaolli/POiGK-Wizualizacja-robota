@@ -1,23 +1,21 @@
 #pragma once
 
-#include <d3d11.h>
-#include <wrl/client.h>
-
-namespace wrl = Microsoft::WRL;
+#include "Graphics.h"
 
 struct Vertex
 {
-    float x, y, z;
+    dx::XMFLOAT3 position;
+    dx::XMFLOAT3 normal;
 };
 
 class Mesh {
 public:
-    Mesh(wrl::ComPtr<ID3D11Device> device,
+    void Load(ID3D11Device* device,
         Vertex* vertices, UINT vertexCount,
         unsigned short* indices, UINT indexCount);
 
-    void Bind(wrl::ComPtr<ID3D11DeviceContext> deviceContext);
-    UINT GetIndexCount() const;
+    void Bind(Graphics& gfx);
+	void Draw(Graphics& gfx);
 private:
     wrl::ComPtr<ID3D11Buffer> vertexBuffer;
     wrl::ComPtr<ID3D11Buffer> indexBuffer;
