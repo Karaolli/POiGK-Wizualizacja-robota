@@ -25,12 +25,12 @@ void Mesh::Load(ID3D11Device* device, Vertex* vertices, UINT vertexCount, unsign
 
     device->CreateBuffer(&ibd, &isd, &indexBuffer);
 }
-void Mesh::Bind(Graphics& gfx) {
+void Mesh::Bind(Graphics& gfx) const {
     const UINT stride = sizeof(Vertex);
     const UINT offset = 0u;
     gfx.GetContext()->IASetVertexBuffers(0u, 1u, vertexBuffer.GetAddressOf(), &stride, &offset);
     gfx.GetContext()->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
 }
-void Mesh::Draw(Graphics& gfx) {
+void Mesh::Draw(Graphics& gfx) const {
     gfx.GetContext()->DrawIndexed(indexCount, 0u, 0);
 }

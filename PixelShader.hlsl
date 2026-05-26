@@ -22,9 +22,9 @@ float4 main(VS_OUT input) : SV_Target
     float3 V = normalize(cameraPos - input.worldPos);
     float3 R = reflect(-L, N);
     
-    float3 baseColor = float3(1.0f, 0.5f, 0.5f);
+    float3 baseColor = float3(0.8f, 0.8f, 0.8f);
     
-    float3 ambient = 0.15f * baseColor;
+    float3 ambient = 0.2f * baseColor;
     
     float diff = max(dot(N, L), 0.0);
     float3 diffuse = diff * lightColor * baseColor;

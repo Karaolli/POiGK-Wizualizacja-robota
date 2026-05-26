@@ -14,8 +14,8 @@ public:
         Vertex* vertices, UINT vertexCount,
         unsigned short* indices, UINT indexCount);
 
-    void Bind(Graphics& gfx);
-	void Draw(Graphics& gfx);
+    void Bind(Graphics& gfx) const;
+	void Draw(Graphics& gfx) const;
 private:
     wrl::ComPtr<ID3D11Buffer> vertexBuffer;
     wrl::ComPtr<ID3D11Buffer> indexBuffer;

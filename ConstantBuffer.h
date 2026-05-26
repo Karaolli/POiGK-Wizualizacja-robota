@@ -6,13 +6,13 @@
 
 struct TransformData {
     dx::XMMATRIX transform = dx::XMMatrixIdentity();
-    dx::XMMATRIX world = dx::XMMatrixIdentity();
+    dx::XMMATRIX world     = dx::XMMatrixIdentity();
 };
 
 struct LightData {
-    DirectX::XMFLOAT3 position = { 0.0f, 3.0f, 0.0f };
+    DirectX::XMFLOAT3 position       = { 0.0f, 3.0f, 0.0f };
     float pad1 = 0.0f;
-    DirectX::XMFLOAT3 color = { 1.0f, 1.0f, 1.0f };
+    DirectX::XMFLOAT3 color          = { 1.0f, 1.0f, 1.0f };
     float pad2 = 0.0f;
     DirectX::XMFLOAT3 cameraPosition = { 0.0f, 0.0f, 5.0f };
     float pad3 = 0.0f;
@@ -24,7 +24,7 @@ class ConstantBuffer
 {
 public:
     T data;
-    ConstantBuffer(Graphics &gfx);
+    ConstantBuffer(Graphics& gfx);
 	void Upload(Graphics& gfx) {
 		D3D11_MAPPED_SUBRESOURCE mapped;
 		gfx.GetContext()->Map(buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
@@ -37,14 +37,12 @@ public:
     void BindPS(Graphics& gfx, UINT slot) const {
         gfx.GetContext()->PSSetConstantBuffers(slot, 1u, buffer.GetAddressOf());
     }
-    dx::XMMATRIX transform = dx::XMMatrixIdentity();
-    dx::XMMATRIX world     = dx::XMMatrixIdentity();
 private:
     wrl::ComPtr<ID3D11Buffer> buffer;
 };
 
 template<typename T>
-inline ConstantBuffer<T>::ConstantBuffer(Graphics &gfx)
+inline ConstantBuffer<T>::ConstantBuffer(Graphics& gfx)
 {
     D3D11_BUFFER_DESC cbd = {};
     cbd.Usage = D3D11_USAGE_DYNAMIC;

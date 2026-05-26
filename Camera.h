@@ -5,6 +5,8 @@
 
 namespace dx = DirectX;
 
+constexpr float PI = 3.14159265358979323846f;
+
 class Camera {
 public:
 	dx::XMMATRIX GetMatrix(float aspectRatio) const {
@@ -13,13 +15,15 @@ public:
 			dx::XMMatrixPerspectiveFovLH(45, aspectRatio, 0.1, 100);
 	};
 	dx::XMFLOAT3 GetPosition() const {
-		float x = radius * cosf(pitch) * sinf(yaw);
-		float y = radius * sinf(pitch);
+		float x =  radius * cosf(pitch) * sinf(yaw);
+		float y =  radius * sinf(pitch);
 		float z = -radius * cosf(pitch) * cosf(yaw);
 		return { x, y, z };
 	};
 	void OnMouseDrag(float dx, float dy) {
 		yaw   -= dx * orbitSensitivity;
+		if (yaw >  PI) yaw -= 2.0f * PI;
+		if (yaw < -PI) yaw += 2.0f * PI;
 		pitch += dy * orbitSensitivity;
 		pitch = std::clamp(pitch, -1.57f, 1.57f);
 	};

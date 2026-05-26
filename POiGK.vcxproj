@@ -147,9 +147,11 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Manipulator.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Simulation.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -171,9 +173,11 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="Manipulator.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Graphics.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Simulation.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>

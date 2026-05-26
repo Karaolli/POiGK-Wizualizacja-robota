@@ -4,6 +4,7 @@
 #include "Window.h"
 #include "Graphics.h"
 #include "Scene.h"
+#include "Simulation.h"
 
 #include <chrono>
 
@@ -14,10 +15,11 @@ public:
 	void Update();
 	void Render(UINT vsync);
 
-	Input input;
-	Window window;
-	Graphics gfx;
-	Scene scene;
+	Input      input;
+	Window     window;
+	Graphics   gfx;
+	Scene      scene;
+	Simulation sim;
 private:
 	std::chrono::steady_clock::time_point lastTime = std::chrono::steady_clock::now();
 };

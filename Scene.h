@@ -19,19 +19,20 @@ struct SceneObject {
 class Scene {
 public:
 	Scene(Graphics& gfx);
-	void Initialize(Graphics& gfx);
 	void Draw(Graphics& gfx, float aspectRatio);
-	Mesh* LoadMesh(ID3D11Device* device,
-		Vertex* vertices, UINT vertexCount,
-		unsigned short* indices, UINT indexCount);
-	void AddObject(Mesh* mesh,
+	size_t AddObject(Mesh* mesh,
 		Transform transform);
 
 	std::vector<SceneObject> objects;
 	Camera camera;
 	Mesh* cubeMesh;
-	ConstantBuffer<LightData> lightCB;
 private:
+	Mesh* LoadMesh(ID3D11Device* device,
+		Vertex* vertices, UINT vertexCount,
+		unsigned short* indices, UINT indexCount);
+
 	ConstantBuffer<TransformData> transformCB;
+	ConstantBuffer<LightData>     lightCB;
 	std::vector<Mesh> meshes;
+	size_t cube5;
 };

@@ -65,6 +65,22 @@ LRESULT Window::HandleMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 {
     switch (msg) {
 
+    case WM_ENTERSIZEMOVE:
+        SetTimer(hwnd, 1, 1, nullptr);
+		return 0;
+	case WM_EXITSIZEMOVE:
+        KillTimer(hwnd, 1);
+        app->Update();
+        app->Render(1u);
+        return 0;
+
+    case WM_TIMER:
+        if (wParam == 1) {
+            app->Update();
+            app->Render(1u);
+        }
+        return 0;
+
     case WM_SIZE:
         width = LOWORD(lParam);
         height = HIWORD(lParam);

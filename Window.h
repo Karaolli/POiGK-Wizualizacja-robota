@@ -2,10 +2,6 @@
 
 #include <Windows.h>
 
-#include "Input.h"
-#include "Graphics.h"
-#include "Scene.h"
-
 class App;
 
 class Window {

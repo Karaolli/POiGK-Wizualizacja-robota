@@ -1,5 +1,7 @@
 #include "Graphics.h"
 
+#include <windows.h>
+#include <dxgi.h>
 #include <d3dcompiler.h>
 #include <iterator>
 
@@ -21,19 +23,16 @@ Graphics::Graphics(HWND hwnd, UINT width, UINT height) {
         &scd, &swapChain, &device, nullptr, &deviceContext
     );
 
-    D3D11_TEXTURE2D_DESC depthDesc = {};
-    depthDesc.Width = width;
-    depthDesc.Height = height;
-    depthDesc.MipLevels = 1u;
-    depthDesc.ArraySize = 1u;
-    depthDesc.Format = DXGI_FORMAT_D32_FLOAT;
-    depthDesc.SampleDesc.Count = 1;
-    depthDesc.Usage = D3D11_USAGE_DEFAULT;
-    depthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+    D3D11_DEPTH_STENCIL_DESC dsStateDesc = {};
+    dsStateDesc.DepthEnable = TRUE;
+    dsStateDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+    dsStateDesc.DepthFunc = D3D11_COMPARISON_LESS;
 
-    OnResize(width, height);
+    device->CreateDepthStencilState(&dsStateDesc, &depthStencilState);
 
     deviceContext->OMSetDepthStencilState(depthStencilState.Get(), 0);
+
+    OnResize(width, height);
 
     const D3D11_INPUT_ELEMENT_DESC ied[] =
     {

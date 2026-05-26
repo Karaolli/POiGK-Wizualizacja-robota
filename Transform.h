@@ -17,4 +17,10 @@ struct Transform {
             DirectX::XMMatrixTranslation(position.x, position.y, position.z);
         return matrix;
     }
+	void SetPositionRotationMatrix(const DirectX::XMMATRIX& matrix) {
+		DirectX::XMVECTOR scale, rotation, translation;
+		DirectX::XMMatrixDecompose(&scale, &rotation, &translation, matrix);
+		DirectX::XMStoreFloat3(&this->position, translation);
+		DirectX::XMStoreFloat4(&this->rotation, rotation);
+	}
 };
