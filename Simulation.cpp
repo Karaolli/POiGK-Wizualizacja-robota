@@ -17,6 +17,8 @@ Simulation::Simulation(Scene& scene) : scene(scene)
 	Transform wristTransform = { {}, {}, {0.4, manipulator.GetWristLength(), 0.4} };
 	wristTransform.SetPositionRotationMatrix(manipulator.GetWristTransform());
 	wrist = scene.AddObject(scene.cubeMesh, wristTransform);
+
+	camera.SetFOV(90.0f);
 }
 
 void Simulation::Update(const Input& input, float deltaTime)
@@ -44,5 +46,4 @@ void Simulation::Update(const Input& input, float deltaTime)
 	scene.objects[wrist   ].transform.SetPositionRotationMatrix(manipulator.GetWristTransform());
 
 	camera.Update(manipulator.GetWristTransform());
-	camera.SetFOV(90.0f);
 }
