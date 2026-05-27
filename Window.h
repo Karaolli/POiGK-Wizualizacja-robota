@@ -14,15 +14,10 @@ public:
 	
 	HWND  GetHWND()        const { return hwnd; }
 	bool  IsMinimized()    const { return IsIconic(hwnd); }
-	int   GetWidth()       const { return width; }
-	int   GetHeight()      const { return height; }
-	float GetAspectRatio() const { 
-		return (float)width / (float)height; }
 private:
 	static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	LRESULT HandleMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
 	HWND hwnd;
-	int width, height;
 	LPCWSTR className = L"MainWindow";
 };

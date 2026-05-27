@@ -9,22 +9,22 @@ class Manipulator {
 public:
 	void RotateJoint(int jointIndex, float delta);
 
-	dx::XMMATRIX GetBaseTransform() const;
+	dx::XMMATRIX GetBaseTransform()     const;
 	dx::XMMATRIX GetShoulderTransform() const;
-	dx::XMMATRIX GetElbowTransform() const;
-	dx::XMMATRIX GetWristTransform() const;
+	dx::XMMATRIX GetElbowTransform()    const;
+	dx::XMMATRIX GetWristTransform()    const;
 
 	float GetBaseHeight()     const { return baseHeight; }
 	float GetUpperArmLength() const { return upperArmLength; }
 	float GetForearmLength()  const { return forearmLength; }
 	float GetWristLength()    const { return wristLength; }
 private:
-	float BaseYaw       = 0.0f;
+	float BaseYaw       =  0.0f;
 	float ShoulderPitch = -0.5f;
-	float ElbowPitch    = 2.1f;
-	float WristPitch    = 0.0f;
-	float WristYaw      = 0.0f;
-	float WristRoll     = 0.0f;
+	float ElbowPitch    =  2.1f;
+	float WristPitch    =  0.0f;
+	float WristYaw      =  0.0f;
+	float WristRoll     =  0.0f;
 
 	const float baseMinYaw       = -3.1f;
 	const float baseMaxYaw       =  3.1f;

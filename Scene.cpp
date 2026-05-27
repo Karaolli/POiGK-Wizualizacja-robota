@@ -67,12 +67,12 @@ Scene::Scene(Graphics& gfx)
 	lightCB.data.position = { 5, 10, 5 };
 
 	// test shapes
-	Transform cubeTransform  = { { 3, 0,  3 }, { 0, 0,   0, 1 }, { 1, 1, 1 } };
-	Transform cubeTransform2 = { { 3, 0, -1 }, { 0, 1, 0.5, 1 }, { 1, 1, 1 } };
-	Transform cubeTransform3 = { { 3, 0, -2 }, { 0, 0, 0.5, 1 }, { 1, 5, 1 } };
-	Transform cubeTransform4 = { { 3, 0, -6 }, { 0, 0, 0.5, 1 }, { 2, 2, 1 } };
+	Transform cubeTransform1 = { { -2, 0, -3 }, { 0, 0,   0, 1 }, { 1, 1, 1 } };
+	Transform cubeTransform2 = { {  3, 0,  3 }, { 0, 1, 0.5, 1 }, { 1, 1, 1 } };
+	Transform cubeTransform3 = { { -3, 0,  3 }, { 0, 0, 0.5, 1 }, { 1, 5, 1 } };
+	Transform cubeTransform4 = { {  3, 0, -6 }, { 0, 0, 0.5, 1 }, { 2, 2, 1 } };
 
-	size_t cube1 = AddObject(cubeMesh, cubeTransform);
+	size_t cube1 = AddObject(cubeMesh, cubeTransform1);
 	size_t cube2 = AddObject(cubeMesh, cubeTransform2);
 	size_t cube3 = AddObject(cubeMesh, cubeTransform3);
 	size_t cube4 = AddObject(cubeMesh, cubeTransform4);
@@ -83,12 +83,13 @@ Scene::Scene(Graphics& gfx)
 
 	objects[cube5].transform.position = lightCB.data.position;
 }
-void Scene::Draw(Graphics& gfx, float aspectRatio) {
+void Scene::Draw(Graphics& gfx, Camera& camera) {
+	gfx.SetViewport(camera.GetViewport());
 	lightCB.data.cameraPosition = camera.GetPosition();
 	lightCB.Upload(gfx);
 	for (SceneObject& obj : objects) {
 		transformCB.data.world     = dx::XMMatrixTranspose(obj.transform.GetMatrix());
-		transformCB.data.transform = dx::XMMatrixTranspose(obj.transform.GetMatrix() * camera.GetMatrix(aspectRatio));
+		transformCB.data.transform = dx::XMMatrixTranspose(obj.transform.GetMatrix() * camera.GetMatrix(gfx));
 		transformCB.Upload(gfx);
 		obj.Draw(gfx);
 	}

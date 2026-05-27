@@ -5,7 +5,7 @@
 #include <d3dcompiler.h>
 #include <iterator>
 
-Graphics::Graphics(HWND hwnd, UINT width, UINT height) {
+Graphics::Graphics(HWND hwnd) {
     DXGI_SWAP_CHAIN_DESC scd = {};
     scd.BufferCount = 2u;
     scd.BufferDesc.Width = 0;
@@ -32,7 +32,7 @@ Graphics::Graphics(HWND hwnd, UINT width, UINT height) {
 
     deviceContext->OMSetDepthStencilState(depthStencilState.Get(), 0);
 
-    OnResize(width, height);
+    OnResize();
 
     const D3D11_INPUT_ELEMENT_DESC ied[] =
     {
@@ -58,18 +58,20 @@ Graphics::Graphics(HWND hwnd, UINT width, UINT height) {
 
     deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
-void Graphics::OnResize(UINT width, UINT height) {
-    if (height == 0) height = 8;
-
+void Graphics::OnResize() {
     deviceContext->OMSetRenderTargets(0, nullptr, nullptr);
 	deviceContext->Flush();
 
     renderTargetView.Reset();
-
     depthStencilView.Reset();
     depthStencilBuffer.Reset();
 
     swapChain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0);
+
+    DXGI_SWAP_CHAIN_DESC desc;
+    swapChain->GetDesc(&desc);
+	width  = desc.BufferDesc.Width;
+	height = desc.BufferDesc.Height;
 
     ID3D11Texture2D* backBuffer = nullptr;
     swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer));
@@ -77,7 +79,7 @@ void Graphics::OnResize(UINT width, UINT height) {
     backBuffer->Release();
 
     D3D11_VIEWPORT vp;
-    vp.Width = width;
+    vp.Width  = width;
     vp.Height = height;
     vp.MinDepth = 0.0f;
     vp.MaxDepth = 1.0f;
@@ -86,7 +88,7 @@ void Graphics::OnResize(UINT width, UINT height) {
     deviceContext->RSSetViewports(1u, &vp);
 
     D3D11_TEXTURE2D_DESC depthDesc = {};
-    depthDesc.Width = width;
+    depthDesc.Width  = width;
     depthDesc.Height = height;
     depthDesc.MipLevels = 1u;
     depthDesc.ArraySize = 1u;
@@ -104,12 +106,29 @@ void Graphics::OnResize(UINT width, UINT height) {
 
     device->CreateDepthStencilView(depthStencilBuffer.Get(), &dsvDesc, &depthStencilView);
 }
+void Graphics::SetViewport(const Viewport& viewport) {
+    D3D11_VIEWPORT vp;
+    vp.Width  = viewport.width  * width;
+    vp.Height = viewport.height * height;
+    vp.MinDepth = 0.0f;
+    vp.MaxDepth = 1.0f;
+    vp.TopLeftX = viewport.x * width;
+    vp.TopLeftY = viewport.y * height;
+    deviceContext->RSSetViewports(1u, &vp);
+}
 void Graphics::BeginFrame() {
     deviceContext->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
-	const float color[] = { 0.05f, 0.05f, 0.2f, 1.0f };
-	deviceContext->ClearRenderTargetView(renderTargetView.Get(), color);
+}
+void Graphics::ClearColor(const dx::XMFLOAT4& color)
+{
+    const float clearColor[4] = { color.x, color.y, color.z, color.w };
+    deviceContext->ClearRenderTargetView(renderTargetView.Get(), clearColor);
+}
+void Graphics::ClearDepth()
+{
     deviceContext->ClearDepthStencilView(depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
 }
 void Graphics::EndFrame(UINT vsync) {
+    SetViewport({ 0.0f, 0.0f, 1.0f, 1.0f });
     swapChain->Present(vsync, 0u);
 }

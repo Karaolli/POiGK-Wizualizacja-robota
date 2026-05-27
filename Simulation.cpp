@@ -42,4 +42,7 @@ void Simulation::Update(const Input& input, float deltaTime)
 	scene.objects[upperArm].transform.SetPositionRotationMatrix(manipulator.GetShoulderTransform());
 	scene.objects[forearm ].transform.SetPositionRotationMatrix(manipulator.GetElbowTransform());
 	scene.objects[wrist   ].transform.SetPositionRotationMatrix(manipulator.GetWristTransform());
+
+	camera.Update(manipulator.GetWristTransform());
+	camera.SetFOV(90.0f);
 }

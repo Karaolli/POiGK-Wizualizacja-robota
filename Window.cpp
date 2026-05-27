@@ -3,8 +3,7 @@
 
 #include <windowsx.h>
 
-Window::Window(int width, int height, LPCWSTR title)
-    : width(width), height(height) {
+Window::Window(int width, int height, LPCWSTR title) {
     WNDCLASSEXW wc = {};
     wc.cbSize = sizeof(wc);
     wc.lpfnWndProc = WndProc;
@@ -82,11 +81,9 @@ LRESULT Window::HandleMessage(UINT msg, WPARAM wParam, LPARAM lParam)
         return 0;
 
     case WM_SIZE:
-        width = LOWORD(lParam);
-        height = HIWORD(lParam);
         if (wParam == SIZE_MAXIMIZED || wParam == SIZE_RESTORED) {
             if (app) {
-                app->gfx.OnResize(width, height);
+                app->gfx.OnResize();
                 app->Update();
                 app->Render(1u);
             }

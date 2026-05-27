@@ -25,7 +25,7 @@ class ConstantBuffer
 public:
     T data;
     ConstantBuffer(Graphics& gfx);
-	void Upload(Graphics& gfx) {
+	void Upload(Graphics& gfx) { // Przesłanie danych do GPU
 		D3D11_MAPPED_SUBRESOURCE mapped;
 		gfx.GetContext()->Map(buffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
 		memcpy(mapped.pData, &data, sizeof(T));

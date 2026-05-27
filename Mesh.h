@@ -10,12 +10,12 @@ struct Vertex
 
 class Mesh {
 public:
-    void Load(ID3D11Device* device,
+    void Load(ID3D11Device* device, // Ładowanie siatki do GPU
         Vertex* vertices, UINT vertexCount,
         unsigned short* indices, UINT indexCount);
 
-    void Bind(Graphics& gfx) const;
-	void Draw(Graphics& gfx) const;
+    void Bind(Graphics& gfx) const; // Podłączenie buforów przed rysowaniem
+	void Draw(Graphics& gfx) const; // Rysowanie na GPU
 private:
     wrl::ComPtr<ID3D11Buffer> vertexBuffer;
     wrl::ComPtr<ID3D11Buffer> indexBuffer;

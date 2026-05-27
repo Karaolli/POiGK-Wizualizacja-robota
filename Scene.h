@@ -10,7 +10,7 @@
 struct SceneObject {
 	Mesh*     mesh;
 	Transform transform;
-	void Draw(Graphics& gfx) {
+	void Draw(Graphics& gfx) { // Podlączenie i rysowanie
 		mesh->Bind(gfx);
 		mesh->Draw(gfx);
 	}
@@ -19,15 +19,14 @@ struct SceneObject {
 class Scene {
 public:
 	Scene(Graphics& gfx);
-	void Draw(Graphics& gfx, float aspectRatio);
-	size_t AddObject(Mesh* mesh,
+	void Draw(Graphics& gfx, Camera& camera); // Aktualizacja buforów stałych, rysowanie wszystkich obiektów
+	size_t AddObject(Mesh* mesh, // Dodanie obiektu do sceny, zwracanie jego indeksu w wektorze wszystkich obiektów
 		Transform transform);
 
 	std::vector<SceneObject> objects;
-	Camera camera;
 	Mesh* cubeMesh;
 private:
-	Mesh* LoadMesh(ID3D11Device* device,
+	Mesh* LoadMesh(ID3D11Device* device, // Ładowanie siatki do wektora wszystkich siatek, zwracanie wskaźnika do dodanej siatki
 		Vertex* vertices, UINT vertexCount,
 		unsigned short* indices, UINT indexCount);
 

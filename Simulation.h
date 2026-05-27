@@ -10,6 +10,7 @@ class Simulation {
 public:
 	Simulation(Scene& scene);
 	void Update(const Input& input, float deltaTime);
+	CameraAttached camera;
 private:
 	Scene& scene;
 	Manipulator	manipulator;
@@ -19,4 +20,3 @@ private:
 	size_t forearm;
 	size_t wrist;
 };
-

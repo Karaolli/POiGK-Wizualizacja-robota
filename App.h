@@ -11,15 +11,16 @@
 class App {
 public:
 	App();
-	int  Run();
+	int  Run(); // Główna pętla
 	void Update();
 	void Render(UINT vsync);
 
-	Input      input;
-	Window     window;
-	Graphics   gfx;
-	Scene      scene;
-	Simulation sim;
+	Input       input;
+	Window      window;
+	Graphics    gfx;
+	CameraOrbit camera;
+	Scene       scene;
+	Simulation  sim;
 private:
 	std::chrono::steady_clock::time_point lastTime = std::chrono::steady_clock::now();
 };
