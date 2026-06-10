@@ -8,23 +8,56 @@ namespace dx = DirectX;
 class Manipulator {
 public:
 	void RotateJoint(int jointIndex, float delta);
+	bool SetTarget(float x, float y, float z, float wristPitch, float wristYaw, float wristRoll);
+
+	bool IsMoving() const { return moving; }
+	void MoveTowardsTarget(float deltaTime);
 
 	dx::XMMATRIX GetBaseTransform()     const;
 	dx::XMMATRIX GetShoulderTransform() const;
 	dx::XMMATRIX GetElbowTransform()    const;
 	dx::XMMATRIX GetWristTransform()    const;
 
+	float GetBaseYaw()       const { return baseYaw; }
+	float GetShoulderPitch() const { return shoulderPitch; }
+	float GetElbowPitch()    const { return elbowPitch; }
+	float GetWristPitch()    const { return wristPitch; }
+	float GetWristYaw()      const { return wristYaw; }
+	float GetWristRoll()     const { return wristRoll; }
+
 	float GetBaseHeight()     const { return baseHeight; }
 	float GetUpperArmLength() const { return upperArmLength; }
 	float GetForearmLength()  const { return forearmLength; }
 	float GetWristLength()    const { return wristLength; }
+
+	float GetBaseMinYaw()       const { return baseMinYaw; }
+	float GetBaseMaxYaw()       const { return baseMaxYaw; }
+	float GetShoulderMinPitch() const { return shoulderMinPitch; }
+	float GetShoulderMaxPitch() const { return shoulderMaxPitch; }
+	float GetElbowMinPitch()    const { return elbowMinPitch; }
+	float GetElbowMaxPitch()    const { return elbowMaxPitch; }
+	float GetWristMinPitch()    const { return wristMinPitch; }
+	float GetWristMaxPitch()    const { return wristMaxPitch; }
+	float GetWristMinYaw()      const { return wristMinYaw; }
+	float GetWristMaxYaw()      const { return wristMaxYaw; }
+	float GetWristMinRoll()     const { return wristMinRoll; }
+	float GetWristMaxRoll()     const { return wristMaxRoll; }
+
+	float baseYawTarget       =  0.0f;
+	float shoulderPitchTarget = -0.5f;
+	float elbowPitchTarget    =  2.1f;
+	float wristPitchTarget    =  0.0f;
+	float wristYawTarget      =  0.0f;
+	float wristRollTarget     =  0.0f;
+
+	bool moving = false;
 private:
-	float BaseYaw       =  0.0f;
-	float ShoulderPitch = -0.5f;
-	float ElbowPitch    =  2.1f;
-	float WristPitch    =  0.0f;
-	float WristYaw      =  0.0f;
-	float WristRoll     =  0.0f;
+	float baseYaw       =  0.0f;
+	float shoulderPitch = -0.5f;
+	float elbowPitch    =  2.1f;
+	float wristPitch    =  0.0f;
+	float wristYaw      =  0.0f;
+	float wristRoll     =  0.0f;
 
 	const float baseMinYaw       = -3.1f;
 	const float baseMaxYaw       =  3.1f;

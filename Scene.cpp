@@ -65,23 +65,6 @@ Scene::Scene(Graphics& gfx)
 		cubeIndices,  (UINT)std::size(cubeIndices));
 
 	lightCB.data.position = { 5, 10, 5 };
-
-	// test shapes
-	Transform cubeTransform1 = { { -2, 0, -3 }, { 0, 0,   0, 1 }, { 1, 1, 1 } };
-	Transform cubeTransform2 = { {  3, 0,  3 }, { 0, 1, 0.5, 1 }, { 1, 1, 1 } };
-	Transform cubeTransform3 = { { -3, 0,  3 }, { 0, 0, 0.5, 1 }, { 1, 5, 1 } };
-	Transform cubeTransform4 = { {  3, 0, -6 }, { 0, 0, 0.5, 1 }, { 2, 2, 1 } };
-
-	size_t cube1 = AddObject(cubeMesh, cubeTransform1);
-	size_t cube2 = AddObject(cubeMesh, cubeTransform2);
-	size_t cube3 = AddObject(cubeMesh, cubeTransform3);
-	size_t cube4 = AddObject(cubeMesh, cubeTransform4);
-
-	// cube at light source
-	Transform cubeTransform5 = { lightCB.data.position, { 0, 0, 0, 1 }, { 0.1, 0.1, 0.1 } };
-	cube5 = AddObject(cubeMesh, cubeTransform5);
-
-	objects[cube5].transform.position = lightCB.data.position;
 }
 void Scene::Draw(Graphics& gfx, Camera& camera) {
 	gfx.SetViewport(camera.GetViewport());
@@ -101,7 +84,7 @@ Mesh* Scene::LoadMesh(ID3D11Device* device,
 	meshes.back().Load(device, vertices, vertexCount, indices, indexCount);
 	return &meshes.back();
 }
-size_t Scene::AddObject(Mesh* mesh, Transform transform) {
+size_t Scene::AddObject(Mesh* mesh, const Transform& transform) {
 	SceneObject obj;
 
 	obj.mesh = mesh;

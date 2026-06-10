@@ -5,6 +5,7 @@
 #include "Graphics.h"
 #include "Scene.h"
 #include "Simulation.h"
+#include "GUI.h"
 
 #include <chrono>
 
@@ -21,6 +22,8 @@ public:
 	CameraOrbit camera;
 	Scene       scene;
 	Simulation  sim;
+	GUI         gui;
 private:
 	std::chrono::steady_clock::time_point lastTime = std::chrono::steady_clock::now();
+	float deltaTime;
 };

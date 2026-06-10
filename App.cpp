@@ -5,6 +5,7 @@ App::App()
     , gfx(window.GetHWND())
     , scene(gfx)
 	, sim(scene)
+	, gui(window, gfx)
 {
     window.app = this;
 }
@@ -15,13 +16,16 @@ int App::Run() {
         Update();
         Render(0u);
     }
+	gui.Shutdown();
     return 0;
 }
 void App::Update()
 {
     std::chrono::steady_clock::time_point now = std::chrono::steady_clock::now();
-    float deltaTime = std::chrono::duration<float>(now - lastTime).count();
+    deltaTime = std::chrono::duration<float>(now - lastTime).count();
     lastTime = now;
+
+    input.Update();
 
     camera.Update(input);
 	sim.Update(input, deltaTime);
@@ -38,6 +42,8 @@ void App::Render(UINT vsync)
 
 	gfx.ClearDepth();
     scene.Draw(gfx, sim.camera);
+
+    gui.Draw(sim, deltaTime);
 
     gfx.EndFrame(vsync);
 }

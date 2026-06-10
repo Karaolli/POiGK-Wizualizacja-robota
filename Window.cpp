@@ -2,7 +2,10 @@
 #include "App.h"
 
 #include <windowsx.h>
+#include "imgui_impl_win32.h"
 
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(
+    HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 Window::Window(int width, int height, LPCWSTR title) {
     WNDCLASSEXW wc = {};
     wc.cbSize = sizeof(wc);
@@ -42,6 +45,7 @@ bool Window::ProcessMessages()
 }
 
 LRESULT CALLBACK Window::WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
+    if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wParam, lParam)) return true;
     Window* self = nullptr;
 
     if (msg == WM_NCCREATE) {
@@ -91,31 +95,31 @@ LRESULT Window::HandleMessage(UINT msg, WPARAM wParam, LPARAM lParam)
         return 0;
 
     case WM_KEYDOWN:
-        app->input.keys[wParam] = true;
+        app->input.down[wParam] = true;
         return 0;
     case WM_KEYUP:
-        app->input.keys[wParam] = false;
+        app->input.down[wParam] = false;
         return 0;
 
     case WM_LBUTTONDOWN:
-        app->input.mouseButtons[0] = true;
+        app->input.mouseDown[0] = true;
         return 0;
     case WM_LBUTTONUP:
-        app->input.mouseButtons[0] = false;
+        app->input.mouseDown[0] = false;
         return 0;
     case WM_RBUTTONDOWN:
-        app->input.mouseButtons[1] = true;
+        app->input.mouseDown[1] = true;
         SetCapture(hwnd);
         return 0;
     case WM_RBUTTONUP:
-        app->input.mouseButtons[1] = false;
+        app->input.mouseDown[1] = false;
         ReleaseCapture();
         return 0;
     case WM_MBUTTONDOWN:
-        app->input.mouseButtons[2] = true;
+        app->input.mouseDown[2] = true;
         return 0;
     case WM_MBUTTONUP:
-        app->input.mouseButtons[2] = false;
+        app->input.mouseDown[2] = false;
         return 0;
 
     case WM_MOUSEMOVE: {

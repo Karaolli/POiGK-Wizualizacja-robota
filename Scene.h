@@ -20,8 +20,7 @@ class Scene {
 public:
 	Scene(Graphics& gfx);
 	void Draw(Graphics& gfx, Camera& camera); // Aktualizacja buforów stałych, rysowanie wszystkich obiektów
-	size_t AddObject(Mesh* mesh, // Dodanie obiektu do sceny, zwracanie jego indeksu w wektorze wszystkich obiektów
-		Transform transform);
+	size_t AddObject(Mesh* mesh, const Transform& transform);// Dodanie obiektu do sceny, zwracanie jego indeksu w wektorze wszystkich obiektów
 
 	std::vector<SceneObject> objects;
 	Mesh* cubeMesh;

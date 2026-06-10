@@ -29,7 +29,7 @@ private:
 class CameraOrbit : public Camera {
 public:
 	void Update(const Input& input) { // Aktualizacja pozycji kamery myszką
-		if (input.mouseButtons[1]) { // Obracanie
+		if (input.mouseDown[1]) { // Obracanie
 			yaw -= input.mouseDX * orbitSensitivity;
 			if (yaw >  dx::XM_PI) yaw -= 2.0f * dx::XM_PI;
 			if (yaw < -dx::XM_PI) yaw += 2.0f * dx::XM_PI;
@@ -41,16 +41,16 @@ public:
 			radius = std::clamp(radius, minRadius, maxRadius);
 		}
 
-		float x = radius * cosf(pitch) * sinf(yaw);
-		float y = radius * sinf(pitch);
-		float z = -radius * cosf(pitch) * cosf(yaw);
+		float x = target.x + radius * cosf(pitch) * sinf(yaw);
+		float y = target.y + radius * sinf(pitch);
+		float z = target.z - radius * cosf(pitch) * cosf(yaw);
 		position = { x, y, z };
 	};
 private:
 	dx::XMMATRIX GetView() const override {
 		return dx::XMMatrixLookAtLH(XMLoadFloat3(&position), dx::XMLoadFloat3(&target), { 0.0f, 1.0f, 0.0f });
 	}
-	dx::XMFLOAT3 target = { 0.0f, 0.0f,  0.0f };
+	dx::XMFLOAT3 target = { 0.0f, 2.0f,  0.0f };
 	float yaw = 0.0f;
 	float pitch = 0.5f;
 	float radius = 5.0f;
