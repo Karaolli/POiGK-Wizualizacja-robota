@@ -21,7 +21,7 @@ void GUI::Draw(Simulation& sim, float deltaTime)
     ImGui::SetNextWindowSize(ImVec2(0, 0), ImGuiCond_Always);
     ImGui::SetNextWindowPos(ImVec2(100, 10), ImGuiCond_Once);
 
-    ImGui::Begin("Sterowanie");
+    ImGui::Begin("Control");
 
 	auto label = [](const char* text) {
 		ImGui::SetNextItemWidth(150.0f);
@@ -29,12 +29,12 @@ void GUI::Draw(Simulation& sim, float deltaTime)
 		ImGui::SameLine();
 		};
 
-    label("Angle 1");
-    label("Angle 2");
-    label("Angle 3");
-    label("Angle 4");
-    label("Angle 5");
-    label("Angle 6");
+    label("Angle 1 [Rad]");
+    label("Angle 2 [Rad]");
+    label("Angle 3 [Rad]");
+    label("Angle 4 [Rad]");
+    label("Angle 5 [Rad]");
+    label("Angle 6 [Rad]");
 
     float baseYawTarget       = sim.manipulator.GetBaseYaw();
     float shoulderPitchTarget = sim.manipulator.GetShoulderPitch();
